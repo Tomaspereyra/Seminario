@@ -1,3 +1,8 @@
 
 hola mundo
+<<<<<<< HEAD
 gatoss
+=======
+hola github
+agrenado lineas
+>>>>>>> 2c7999fb7ae0ebd75470d4ccc287fa688695ec02
