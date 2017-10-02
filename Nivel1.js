@@ -839,11 +839,11 @@
  "tilesets":[
         {
          "firstgid":1,
-         "source":"sin_nombre.tsx"
+         "source":"..\/sin_nombre.tsx"
         }, 
         {
          "firstgid":157,
-         "source":"fondo.tsx"
+         "source":"..\/fondo.tsx"
         }],
  "tilewidth":70,
  "type":"map",
