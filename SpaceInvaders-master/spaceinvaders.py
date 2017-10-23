@@ -5,10 +5,13 @@ import random
 
 class Juego:
     def __init__(self):
-        self.puntaje = 0
-        self.vidas = 2
+        #definiciones de variables
+        self.screen = pygame.display.set_mode((800, 600))
         pygame.font.init()
         self.font = pygame.font.Font("assets/fuente.ttf", 15)
+        self.puntaje = 0
+        self.vidas = 5
+        #barrera de defensa
         disenioDeBarrera = [[],[0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0],
                          [0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0],
                          [0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
@@ -29,7 +32,6 @@ class Juego:
                          [1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1],
                          [1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1]]
 
-        self.screen = pygame.display.set_mode((800, 600))
         self.enemigos_sprites = {
                 0:[pygame.image.load("assets/a1_0.png").convert(), pygame.image.load("assets/a1_1.png").convert()],
                 1:[pygame.image.load("assets/a2_0.png").convert(), pygame.image.load("assets/a2_1.png").convert()],
@@ -48,6 +50,8 @@ class Juego:
         self.barrera_particulas = []
         startY = 50
         startX = 50
+        #Este fragmento determina que sprite de enemigo se utilizara y lo añade
+        #a la lista
         for filas in range(6):
             out = []
             if filas < 2:
@@ -65,6 +69,7 @@ class Juego:
         barreraY = 400
         espacio = 100
 
+        #este fragmento genera las barreras
         for offset in range(1, 5):
             for b in disenioDeBarrera:
                 for b in b:
@@ -76,6 +81,8 @@ class Juego:
             barreraY = 400
 
     def enemyUpdate(self):
+        #enemyUpdate controla las colisiones con el jugador, y el movimiento de los enemigos.
+        #tambien, controla la posibilidad de que un enemigo dispare
         if not self.enemigos_ultMov:
             for enemigo in self.enemigos:
                 for enemigo in enemigo:
@@ -102,12 +109,15 @@ class Juego:
     
         
     def moveEnemiesDown(self):
+        #moveEnemiesDown se llama dentro de enemyUpdate para mover los enemigos
+        #hacia abajo
         for enemigo in self.enemigos:
             for enemigo in enemigo:
                 enemigo = enemigo[1]
                 enemigo.y += 20
 
     def playerUpdate(self):
+        #playerUpdate controla el movimieto y disparo del jugador
         tecla = pygame.key.get_pressed()
         if tecla[K_RIGHT] and self.playerX < 800 - self.player.get_width():
             self.playerX += 5
@@ -117,6 +127,8 @@ class Juego:
             self.bala = pygame.Rect(self.playerX + self.player.get_width() / 2- 2, self.playerY - 15, 5, 10)
 
     def bulletUpdate(self):
+        #bulletUpdate controla las colisiones de balas
+        #colisiones entre enemigos y balas
         for i, enemigo in enumerate(self.enemigos):
             for j, enemigo in enumerate(enemigo):
                 enemigo = enemigo[1]
@@ -126,12 +138,13 @@ class Juego:
                     self.chance -= 1
                     self.puntaje += 100
                 
+        
         if self.bala:
             self.bala.y -= 20
             if self.bala.y < 0:
                 self.bala = None
 
-
+        #colisiones entre balas enemigas y el jugador
         for x in self.balas:
             x.y += 20
             if x.y > 600:
@@ -140,7 +153,7 @@ class Juego:
                 self.vidas -= 1
                 self.balas.remove(x)
                 self.resetPlayer()
-
+        #colisiones entre balas y barreras defensoras
         for b in self.barrera_particulas:
             check = b.collidelist(self.balas)
             if check != -1:
@@ -151,7 +164,9 @@ class Juego:
                 self.barrera_particulas.remove(b)
                 self.bala = None
                 self.puntaje += 10
+                
     def resetPlayer(self):
+        #coloca al jugador en  mitad de la pantalla si recibe un disparo
         self.playerX = 400
 
     def run(self):
@@ -162,13 +177,19 @@ class Juego:
             
             clock.tick(60)
             self.screen.fill((0,0,0))
+            self.screen.blit((pygame.image.load("assets/star.jpg").convert()),(0,0))
+           
             for event in pygame.event.get():
                 if event.type == QUIT:
                     sys.exit()
+                    
+            #Este fragmento dibuja los enemigos        
             for enemigo in self.enemigos:
                 for enemigo in enemigo:
                     self.screen.blit(pygame.transform.scale(self.enemigos_sprites[enemigo[0]][self.animacion_On], (35,35)), (enemigo[1].x, enemigo[1].y))
-            self.screen.blit(self.player, (self.playerX, self.playerY))
+                    self.screen.blit(self.player, (self.playerX, self.playerY))
+            
+            #Este fragmento dibuja las balas y la barrear
             if self.bala:
                 pygame.draw.rect(self.screen, (52, 255, 0), self.bala)
             for bullet in self.balas:
@@ -176,14 +197,18 @@ class Juego:
             for b in self.barrera_particulas:
                 pygame.draw.rect(self.screen, (52, 255, 0), b)
             
-            if not self.enemigos:
+            #Este fragmento determina si se gano o se perdio, o debe continuarse la ejecucion
+            if self.enemigos==0:
                 self.screen.blit(pygame.font.Font("assets/fuente.ttf", 100).render("Ganaste!", -1, (52,255,0)), (100, 200))
             elif self.vidas > 0:
                 self.bulletUpdate()
                 self.enemyUpdate()
                 self.playerUpdate()
             elif self.vidas == 0:
-                self.screen.blit(pygame.font.Font("assets/fuente.ttf", 100).render("Perdiste!", -1, (52,255,0)), (100, 200))
+                self.screen.blit(pygame.font.Font("assets/fuente.ttf", 100).render("Perdiste! Flecha arriba para reiniciar", -1, (52,255,0)), (100, 200))
+                tecla = pygame.key.get_pressed()
+                if tecla[K_UP]:
+                    Juego.__init__(self)
             self.screen.blit(self.font.render("Vidas: {}".format(self.vidas), -1, (255,255,255)), (20, 10))
             self.screen.blit(self.font.render("Puntaje: {}".format(self.puntaje), -1, (255,255,255)), (400, 10))
             pygame.display.flip()
