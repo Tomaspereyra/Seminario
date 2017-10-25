@@ -11,6 +11,8 @@ class Juego:
         self.font = pygame.font.Font("assets/fuente.ttf", 15)
         self.puntaje = 0
         self.vidas = 5
+        self.killed = 0
+        self.final= False
         #barrera de defensa
         disenioDeBarrera = [[],[0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0],
                          [0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0],
@@ -33,14 +35,88 @@ class Juego:
                          [1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1]]
 
         self.enemigos_sprites = {
-                0:[pygame.image.load("assets/a1_0.png").convert(), pygame.image.load("assets/a1_1.png").convert()],
-                1:[pygame.image.load("assets/a2_0.png").convert(), pygame.image.load("assets/a2_1.png").convert()],
-                2:[pygame.image.load("assets/a3_0.png").convert(), pygame.image.load("assets/a3_1.png").convert()],
+                0:[pygame.image.load("assets/a1_0.png").convert_alpha(), pygame.image.load("assets/a1_1.png").convert_alpha()],
+                1:[pygame.image.load("assets/a2_0.png").convert_alpha(), pygame.image.load("assets/a2_1.png").convert_alpha()],
+                2:[pygame.image.load("assets/a3_0.png").convert_alpha(), pygame.image.load("assets/a3_1.png").convert_alpha()],
                 }
         self.player = pygame.image.load("assets/shooter.png").convert()
         self.animacion_On = 0
         self.direccion = 1
         self.enemigos_velocidad = 20
+        self.enemigos_ultMov = 0
+        self.playerX = 400
+        self.playerY = 550
+        self.bala = None
+        self.balas = []
+        self.enemigos = []
+        self.barrera_particulas = []
+        startY = 50
+        startX = 50
+        #Este fragmento determina que sprite de enemigo se utilizara y lo añade
+        #a la lista
+        for filas in range(6):
+            out = []
+            if filas < 2:
+                enemigo = 0
+            elif filas < 4:
+                enemigo = 1
+            else:
+                enemigo = 2
+            for columns in range(10):
+                out.append((enemigo,pygame.Rect(startX * columns, startY * filas, 35, 35)))
+            self.enemigos.append(out)
+        self.chance = 990
+
+        barreraX = 50
+        barreraY = 400
+        espacio = 100
+
+        #este fragmento genera las barreras
+        for offset in range(1, 5):
+            for b in disenioDeBarrera:
+                for b in b:
+                    if b != 0:
+                        self.barrera_particulas.append(pygame.Rect(barreraX + espacio * offset, barreraY, 5,5))
+                    barreraX += 5
+                barreraX = 50 * offset
+                barreraY += 3
+            barreraY = 400
+
+    def init2(self):
+        self.vidas = 5
+        self.killed = 0
+        self.final= True
+        #barrera de defensa
+
+        self.enemigos_sprites = {
+                0:[pygame.image.load("assets/2a1_0.png").convert_alpha(), pygame.image.load("assets/2a1_1.png").convert_alpha()],
+                1:[pygame.image.load("assets/2a2_0.png").convert_alpha(), pygame.image.load("assets/2a2_1.png").convert_alpha()],
+                2:[pygame.image.load("assets/2a3_0.png").convert_alpha(), pygame.image.load("assets/2a3_1.png").convert_alpha()],
+                }
+        #barrera de defensa
+        disenioDeBarrera = [[],[0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0],
+                         [0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0],
+                         [0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
+                         [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+                         [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                         [1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,1],
+                         [1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,1],
+                         [1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1],
+                         [1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1],
+                         [1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1]]
+
+        self.animacion_On = 0
+        self.direccion = 1
+        self.enemigos_velocidad = 40
         self.enemigos_ultMov = 0
         self.playerX = 400
         self.playerY = 550
@@ -134,6 +210,7 @@ class Juego:
                 enemigo = enemigo[1]
                 if self.bala and enemigo.colliderect(self.bala):
                     self.enemigos[i].pop(j)
+                    self.killed+=1
                     self.bala = None
                     self.chance -= 1
                     self.puntaje += 100
@@ -170,12 +247,14 @@ class Juego:
         self.playerX = 400
 
     def run(self):
+        
         clock = pygame.time.Clock()
         for x in range(3):
             self.moveEnemiesDown()
         while True:
             
             clock.tick(60)
+            
             self.screen.fill((0,0,0))
             self.screen.blit((pygame.image.load("assets/star.jpg").convert()),(0,0))
            
@@ -197,15 +276,23 @@ class Juego:
             for b in self.barrera_particulas:
                 pygame.draw.rect(self.screen, (52, 255, 0), b)
             
-            #Este fragmento determina si se gano o se perdio, o debe continuarse la ejecucion
-            if self.enemigos==0:
-                self.screen.blit(pygame.font.Font("assets/fuente.ttf", 100).render("Ganaste!", -1, (52,255,0)), (100, 200))
+            #Este fragmento determina si se gano o se perdio, o debe continuarse la ejecucion      
+            if self.killed==60:
+                if not self.final:
+                    self.screen.blit(pygame.font.Font("assets/fuente.ttf", 50).render("Ganaste!", -1, (52,255,0)), (100, 200))
+                    self.screen.blit(pygame.font.Font("assets/fuente.ttf", 50).render("Flecha arriba para continuar", -1, (52,255,0)), (100, 300))
+                    tecla = pygame.key.get_pressed()
+                    if tecla[K_UP]:
+                        Juego.init2(self)
+                if self.final:
+                    self.screen.blit(pygame.font.Font("assets/fuente.ttf", 70).render("SALVASTE AL MUNDO", -1, (52,255,0)), (100, 200)) 
             elif self.vidas > 0:
                 self.bulletUpdate()
                 self.enemyUpdate()
                 self.playerUpdate()
             elif self.vidas == 0:
-                self.screen.blit(pygame.font.Font("assets/fuente.ttf", 100).render("Perdiste! Flecha arriba para reiniciar", -1, (52,255,0)), (100, 200))
+                self.screen.blit(pygame.font.Font("assets/fuente.ttf", 50).render("Perdiste!", -1, (52,255,0)), (100, 200))
+                self.screen.blit(pygame.font.Font("assets/fuente.ttf", 50).render("Flecha arriba para reiniciar", -1, (52,255,0)), (100, 300))
                 tecla = pygame.key.get_pressed()
                 if tecla[K_UP]:
                     Juego.__init__(self)
