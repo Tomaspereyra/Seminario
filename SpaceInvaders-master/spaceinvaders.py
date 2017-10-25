@@ -1,10 +1,105 @@
-import pygame
+import pygame,time
 from pygame.locals import *
 import sys
+import os
 import random
+# Constantes
+ancho = 800
+alto = 600
+blanco = 255, 255, 255
+negro = 0, 0, 0
+rojo = 200, 0, 0
+rojo_brillante = 255, 0, 0
+azul = 0, 0, 255 
+pantalla = pygame.display.set_mode((ancho, alto))
+clock = pygame.time.Clock()
+
+def cargar_imagen(nombre, dir_imagen, alpha=False):
+    # Encontramos la ruta completa de la imagen
+     ruta = os.path.join(dir_imagen, nombre)
+     try:
+        image = pygame.image.load(ruta)
+     except:
+        print("Error, no se puede cargar la imagen: " + ruta)
+        sys.exit(1)
+     # Comprobar si la imagen tiene "canal alpha" (como los png)
+     if alpha is False:
+        image = image.convert_alpha()
+     else:
+        image = image.convert()
+     return image
+
+
+
+
+def boton(msj, x, y, w, h, c_mate, c_brillo, accion): 
+            
+         mouse = pygame.mouse.get_pos()
+         click = pygame.mouse.get_pressed()
+         
+         if x + w > mouse[0] > x and y + h > mouse[1] > y:                             
+             mensaje(msj, 0, 30, (x + (w / 2)), (y + h / 2),rojo)
+             
+             
+                 
+             if click[0] == 1 and accion != None:
+                 if accion == "Salir":
+                     
+                     pygame.quit()
+                     quit()
+                 if accion == "Jugar":
+                     Juego().run() 
+         else:
+             
+             
+             mensaje(msj, 0, 30, (x + (w / 2)), (y + h / 2),blanco)
+             pygame.display.flip()
+             
+def text_objects(text, font,color):
+    textSurface = font.render(text, True, color)
+    return textSurface, textSurface.get_rect() 
+
+def mensaje(text, desplazamientoy=0, tamaño=80, ancho_=ancho, alto_=alto,color=blanco):
+     largeText = pygame.font.Font("Fuentes/space_invaders.ttf", tamaño)
+     TextSurf, TextRect = text_objects(text, largeText,color)
+     TextRect.center = ((ancho_), (alto_) - desplazamientoy)
+     pantalla.blit(TextSurf, TextRect)    
 
 class Juego:
+      
+    
+    def introduccion(self):
+           
+     
+     fondo = cargar_imagen("fondonuevo.jpeg", "imagenes", alpha=False)
+     fondo = pygame.transform.scale(fondo, (800, 600)) 
+     pantalla = pygame.display.set_mode((ancho, alto))
+     pantalla.blit(fondo, (0, 0))
+     pygame.display.flip()
+     
+         
+     
+ 
+     introJuego = True
+     while introJuego:
+       for event in pygame.event.get():
+         if event.type == pygame.QUIT:
+             introJuego = False
+             pygame.QUIT()
+             quit()
+          
+         
+         mensaje("Anillos De Saturno", 0, 30, 500, 50)
+         boton("Jugar", 100, 100, 120, 50, azul, rojo_brillante,"Jugar")
+         boton("Controles",100, 300, 120, 50, rojo, rojo_brillante,"Controles")
+         boton("Salir",100, 500, 120, 50,rojo,rojo_brillante,"Salir")
+         mouse = pygame.mouse.get_pos()
+         print(mouse)
+         pygame.display.update()   
+     
+#############################################################    
     def __init__(self):
+        
         #definiciones de variables
         self.screen = pygame.display.set_mode((800, 600))
         pygame.font.init()
@@ -247,11 +342,11 @@ class Juego:
         self.playerX = 400
 
     def run(self):
-        
-        clock = pygame.time.Clock()
-        for x in range(3):
+         
+         clock = pygame.time.Clock()
+         for x in range(3):
             self.moveEnemiesDown()
-        while True:
+         while True:
             
             clock.tick(60)
             
@@ -302,4 +397,5 @@ class Juego:
 
 
 if __name__ == "__main__":
-    Juego().run()
+    pygame.display.set_caption("Anillos de Saturno")  
+    Juego().introduccion()
