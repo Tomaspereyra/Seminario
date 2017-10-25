@@ -211,7 +211,7 @@ class Juego:
 
         self.animacion_On = 0
         self.direccion = 1
-        self.enemigos_velocidad = 40
+        self.enemigos_velocidad = 20
         self.enemigos_ultMov = 0
         self.playerX = 400
         self.playerY = 550
@@ -234,7 +234,7 @@ class Juego:
             for columns in range(10):
                 out.append((enemigo,pygame.Rect(startX * columns, startY * filas, 35, 35)))
             self.enemigos.append(out)
-        self.chance = 990
+        self.chance = 940
 
         barreraX = 50
         barreraY = 400
