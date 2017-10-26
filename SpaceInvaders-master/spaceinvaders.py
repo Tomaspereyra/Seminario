@@ -105,7 +105,7 @@ class Juego:
         pygame.font.init()
         self.font = pygame.font.Font("assets/fuente.ttf", 15)
         self.puntaje = 0
-        self.vidas = 5
+        self.vidas = 500
         self.killed = 0
         self.final= False
         #barrera de defensa
@@ -178,7 +178,7 @@ class Juego:
             barreraY = 400
 
     def init2(self):
-        self.vidas = 5
+        self.vidas = 500
         self.killed = 0
         self.final= True
         #barrera de defensa
@@ -234,7 +234,7 @@ class Juego:
             for columns in range(10):
                 out.append((enemigo,pygame.Rect(startX * columns, startY * filas, 35, 35)))
             self.enemigos.append(out)
-        self.chance = 940
+        self.chance = 980
 
         barreraX = 50
         barreraY = 400
@@ -310,9 +310,12 @@ class Juego:
                     self.chance -= 1
                     self.puntaje += 100
                 
-        
+   ######
+   #####
+   ####
+   ##cambie la velocida de la bala     
         if self.bala:
-            self.bala.y -= 20
+            self.bala.y -= 50
             if self.bala.y < 0:
                 self.bala = None
 
