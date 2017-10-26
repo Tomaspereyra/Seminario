@@ -29,26 +29,9 @@ def cargar_imagen(nombre, dir_imagen, alpha=False):
         image = image.convert()
      return image
 
-def control():
-     mouse = pygame.mouse.get_pos()
-     click = pygame.mouse.get_pressed()
-     fondo = cargar_imagen("controles.jpeg", "imagenes", alpha=False)
-     pantalla.blit(fondo, (0, 0))
-     
-     pygame.display.flip()
-     controles= True
-     while controles:
-       for event in pygame.event.get():
-         if event.type == pygame.QUIT:
-             controles = False
-             pygame.QUIT()
-             quit()
-         mensaje("Controles", 0, 30, 400, 50)
-         boton("Jugar", 150, 520, 120, 50, azul, rojo_brillante,"Jugar")    
-         boton("Salir", 500, 520, 120, 50, azul, rojo_brillante,"Salir")  
-         pygame.display.update()
-            
-    
+
+
+
 def boton(msj, x, y, w, h, c_mate, c_brillo, accion): 
             
          mouse = pygame.mouse.get_pos()
@@ -66,10 +49,9 @@ def boton(msj, x, y, w, h, c_mate, c_brillo, accion):
                      quit()
                  if accion == "Jugar":
                      Juego().run() 
-                 if accion == "Controles":
-                     control()                        
-                      
          else:
+             
+             
              mensaje(msj, 0, 30, (x + (w / 2)), (y + h / 2),blanco)
              pygame.display.flip()
              
@@ -114,7 +96,8 @@ class Juego:
          mouse = pygame.mouse.get_pos()
          print(mouse)
          pygame.display.update()   
-       
+     
+#############################################################    
     def __init__(self):
         
         #definiciones de variables
