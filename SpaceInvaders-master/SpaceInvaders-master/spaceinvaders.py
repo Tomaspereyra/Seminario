@@ -4,8 +4,6 @@ import sys
 import os
 import random
 # Constantes
-parar = False
-
 ancho = 800
 alto = 600
 blanco = 255, 255, 255
@@ -15,29 +13,7 @@ rojo_brillante = 255, 0, 0
 azul = 0, 0, 255 
 pantalla = pygame.display.set_mode((ancho, alto))
 clock = pygame.time.Clock()
-def quitPausa():
-    global parar
-    parar=False
-def pausa():
-    fondo = cargar_imagen("618.jpg", "imagenes", alpha=False)
-    pantalla.blit(fondo, (0, 0))
-    pygame.display.flip()
-    while parar:
-        mensaje("Pausa", 0, 30, 400, 50, blanco)
-        for event in pygame.event.get():
 
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-                
-        
-        
-
-        boton("Continuar",100,200,100,50,negro,rojo_brillante,"quitPausa")
-        boton("Salir",50,400,100,50,negro,rojo_brillante,"Salir")
-
-        pygame.display.update()
-       
 def cargar_imagen(nombre, dir_imagen, alpha=False):
     # Encontramos la ruta completa de la imagen
      ruta = os.path.join(dir_imagen, nombre)
@@ -53,26 +29,9 @@ def cargar_imagen(nombre, dir_imagen, alpha=False):
         image = image.convert()
      return image
 
-def control():
-     mouse = pygame.mouse.get_pos()
-     click = pygame.mouse.get_pressed()
-     fondo = cargar_imagen("controles.jpeg", "imagenes", alpha=False)
-     pantalla.blit(fondo, (0, 0))
-     
-     pygame.display.flip()
-     controles= True
-     while controles:
-       for event in pygame.event.get():
-         if event.type == pygame.QUIT:
-             controles = False
-             pygame.QUIT()
-             quit()
-         mensaje("Controles", 0, 30, 400, 50)
-         boton("Jugar", 150, 520, 120, 50, azul, rojo_brillante,"Jugar")    
-         boton("Salir", 500, 520, 120, 50, azul, rojo_brillante,"Salir")  
-         pygame.display.update()
-            
-    
+
+
+
 def boton(msj, x, y, w, h, c_mate, c_brillo, accion): 
             
          mouse = pygame.mouse.get_pos()
@@ -90,11 +49,9 @@ def boton(msj, x, y, w, h, c_mate, c_brillo, accion):
                      quit()
                  if accion == "Jugar":
                      Juego().run() 
-                 if accion == "Controles":
-                     control()                        
-                 if accion =="quitPausa":
-                     quitPausa()     
          else:
+             
+             
              mensaje(msj, 0, 30, (x + (w / 2)), (y + h / 2),blanco)
              pygame.display.flip()
              
@@ -109,6 +66,7 @@ def mensaje(text, desplazamientoy=0, tamano=80, ancho_=ancho, alto_=alto,color=b
      pantalla.blit(TextSurf, TextRect)    
 
 class Juego:
+      
     
     def introduccion(self):
            
@@ -138,7 +96,8 @@ class Juego:
          mouse = pygame.mouse.get_pos()
          print(mouse)
          pygame.display.update()   
-       
+     
+#############################################################    
     def __init__(self):
         
         #definiciones de variables
@@ -383,7 +342,7 @@ class Juego:
         self.playerX = 400
 
     def run(self):
-         global parar 
+         
          clock = pygame.time.Clock()
          for x in range(3):
             self.moveEnemiesDown()
@@ -394,12 +353,8 @@ class Juego:
             self.screen.blit((pygame.image.load("assets/star.jpg").convert()),(0,0))
            
             for event in pygame.event.get():
-                tecla = pygame.key.get_pressed()
                 if event.type == QUIT:
                     sys.exit()
-                if tecla[K_p]:
-                    parar=True
-                    pausa() 
                     
             #Este fragmento dibuja los enemigos        
             for enemigo in self.enemigos:
