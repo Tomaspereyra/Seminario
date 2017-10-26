@@ -59,8 +59,8 @@ def text_objects(text, font,color):
     textSurface = font.render(text, True, color)
     return textSurface, textSurface.get_rect() 
 
-def mensaje(text, desplazamientoy=0, tamaño=80, ancho_=ancho, alto_=alto,color=blanco):
-     largeText = pygame.font.Font("Fuentes/space_invaders.ttf", tamaño)
+def mensaje(text, desplazamientoy=0, tamano=80, ancho_=ancho, alto_=alto,color=blanco):
+     largeText = pygame.font.Font("Fuentes/space_invaders.ttf", tamano)
      TextSurf, TextRect = text_objects(text, largeText,color)
      TextRect.center = ((ancho_), (alto_) - desplazamientoy)
      pantalla.blit(TextSurf, TextRect)    
@@ -109,25 +109,25 @@ class Juego:
         self.killed = 0
         self.final= False
         #barrera de defensa
-        disenioDeBarrera = [[],[0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0],
-                         [0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0],
-                         [0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
-                         [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
-                         [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
-                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                         [1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,1],
-                         [1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,1],
-                         [1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1],
-                         [1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1],
-                         [1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1]]
+        disenioDeBarrera = [[],[0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0],
+                               [0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0],
+                               [0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0],
+                               [0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0],
+                               [0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0],
+                               [0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0],
+                               [0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
+                               [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+                               [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                               [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                               [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                               [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                               [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                               [1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1],
+                               [1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1],
+                               [1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,1],
+                               [1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1],
+                               [1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1],
+                               [1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1]]
 
         self.enemigos_sprites = {
                 0:[pygame.image.load("assets/a1_0.png").convert_alpha(), pygame.image.load("assets/a1_1.png").convert_alpha()],
@@ -189,25 +189,25 @@ class Juego:
                 2:[pygame.image.load("assets/2a3_0.png").convert_alpha(), pygame.image.load("assets/2a3_1.png").convert_alpha()],
                 }
         #barrera de defensa
-        disenioDeBarrera = [[],[0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0],
-                         [0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0],
-                         [0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
-                         [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
-                         [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
-                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                         [1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,1],
-                         [1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,1],
-                         [1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1],
-                         [1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1],
-                         [1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1]]
+        disenioDeBarrera = [[],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                               [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                               [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0],
+                               [0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0],
+                               [0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0],
+                               [0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0],
+                               [0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0],
+                               [0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0],
+                               [0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
+                               [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+                               [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                               [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                               [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                               [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                               [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                               [1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1],
+                               [1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1],
+                               [1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,1],
+                               [1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1]]
 
         self.animacion_On = 0
         self.direccion = 1
@@ -350,7 +350,6 @@ class Juego:
             
             clock.tick(60)
             
-            self.screen.fill((0,0,0))
             self.screen.blit((pygame.image.load("assets/star.jpg").convert()),(0,0))
            
             for event in pygame.event.get():
@@ -365,34 +364,38 @@ class Juego:
             
             #Este fragmento dibuja las balas y la barrear
             if self.bala:
-                pygame.draw.rect(self.screen, (52, 255, 0), self.bala)
+                pygame.draw.rect(self.screen, (200, 0, 0), self.bala)
             for bullet in self.balas:
-                pygame.draw.rect(self.screen, (255,255,255), bullet)
+                pygame.draw.rect(self.screen, (200, 0, 0), bullet)
             for b in self.barrera_particulas:
-                pygame.draw.rect(self.screen, (52, 255, 0), b)
+                pygame.draw.rect(self.screen, (230, 135, 70), b)
             
             #Este fragmento determina si se gano o se perdio, o debe continuarse la ejecucion      
             if self.killed==60:
                 if not self.final:
                     self.screen.blit(pygame.font.Font("assets/fuente.ttf", 50).render("Ganaste!", -1, (52,255,0)), (100, 200))
-                    self.screen.blit(pygame.font.Font("assets/fuente.ttf", 50).render("Flecha arriba para continuar", -1, (52,255,0)), (100, 300))
+                    self.screen.blit(pygame.font.Font("assets/fuente.ttf", 50).render("Flecha ARRIBA para continuar", -1, (0, 0, 180)), (100, 300))
                     tecla = pygame.key.get_pressed()
                     if tecla[K_UP]:
                         Juego.init2(self)
                 if self.final:
-                    self.screen.blit(pygame.font.Font("assets/fuente.ttf", 70).render("SALVASTE AL MUNDO", -1, (52,255,0)), (100, 200)) 
+                    self.screen.blit(pygame.font.Font("assets/fuente.ttf", 70).render("¡¡¡SALVASTE AL MUNDO!!!", -1, (0,255,0)), (8, 200)) 
             elif self.vidas > 0:
                 self.bulletUpdate()
                 self.enemyUpdate()
                 self.playerUpdate()
+                tecla = pygame.key.get_pressed()
+                if tecla[K_q]:
+                    sys.exit()
             elif self.vidas == 0:
-                self.screen.blit(pygame.font.Font("assets/fuente.ttf", 50).render("Perdiste!", -1, (52,255,0)), (100, 200))
-                self.screen.blit(pygame.font.Font("assets/fuente.ttf", 50).render("Flecha arriba para reiniciar", -1, (52,255,0)), (100, 300))
+                self.screen.blit(pygame.font.Font("assets/fuente.ttf", 50).render("Perdiste!", -1, (190, 0, 0)), (100, 200))
+                self.screen.blit(pygame.font.Font("assets/fuente.ttf", 50).render("Flecha ARRIBA para reiniciar", -1, (0, 0, 180)), (100, 300))
                 tecla = pygame.key.get_pressed()
                 if tecla[K_UP]:
                     Juego.__init__(self)
             self.screen.blit(self.font.render("Vidas: {}".format(self.vidas), -1, (255,255,255)), (20, 10))
             self.screen.blit(self.font.render("Puntaje: {}".format(self.puntaje), -1, (255,255,255)), (400, 10))
+            self.screen.blit(self.font.render("Quitar ' Q '".format(self.puntaje), -1, (255,255,255)), (717, 10))
             pygame.display.flip()
 
 
