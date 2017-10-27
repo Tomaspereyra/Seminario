@@ -1,4 +1,4 @@
-import pygame,time
+﻿import pygame,time
 from pygame.locals import *
 import sys
 import os
@@ -146,7 +146,7 @@ class Juego:
         pygame.font.init()
         self.font = pygame.font.Font("assets/fuente.ttf", 15)
         self.puntaje = 0
-        self.vidas = 500
+        self.vidas = 5
         self.killed = 0
         self.final= False
         #barrera de defensa
@@ -219,7 +219,7 @@ class Juego:
             barreraY = 400
 
     def init2(self):
-        self.vidas = 500
+        self.vidas = 5
         self.killed = 0
         self.final= True
         #barrera de defensa
