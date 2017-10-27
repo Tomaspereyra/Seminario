@@ -1,4 +1,4 @@
-﻿import pygame,time
+import pygame,time
 from pygame.locals import *
 import sys
 import os
@@ -275,7 +275,7 @@ class Juego:
             for columns in range(10):
                 out.append((enemigo,pygame.Rect(startX * columns, startY * filas, 35, 35)))
             self.enemigos.append(out)
-        self.chance = 980
+        self.chance = 940
 
         barreraX = 50
         barreraY = 400
@@ -351,12 +351,9 @@ class Juego:
                     self.chance -= 1
                     self.puntaje += 100
                 
-   ######
-   #####
-   ####
-   ##cambie la velocida de la bala     
+        
         if self.bala:
-            self.bala.y -= 50
+            self.bala.y -= 20
             if self.bala.y < 0:
                 self.bala = None
 
