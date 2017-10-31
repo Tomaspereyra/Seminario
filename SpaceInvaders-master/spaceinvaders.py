@@ -6,7 +6,6 @@ import random
 
 # Constantes
 parar = False
-
 ancho = 800
 alto = 600
 blanco = 255, 255, 255
@@ -16,7 +15,14 @@ rojo_brillante = 255, 0, 0
 azul = 0, 0, 255 
 pantalla = pygame.display.set_mode((ancho, alto))
 clock = pygame.time.Clock()
+pygame.mixer.pre_init(44100,16,2,4096)
+
+
 pygame.init()
+laser = pygame.mixer.Sound("assets/laser.wav")
+pygame.mixer.music.load("assets/video game.wav")
+pygame.mixer.music.set_volume(0.5)
+pygame.mixer.music.play(-1)
 def quitPausa():
     global parar
     parar=False
@@ -354,6 +360,7 @@ class Juego:
                     self.bala = None
                     self.chance -= 1
                     self.puntaje += 100
+                    pygame.mixer.Sound.play(laser)
                 
         
         if self.bala:
