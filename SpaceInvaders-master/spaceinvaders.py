@@ -146,7 +146,6 @@ class Juego:
          boton("Salir",100, 500, 120, 50,rojo,rojo_brillante,"Salir")
          
          mouse = pygame.mouse.get_pos()
-         print(mouse)
          pygame.display.update()   
        
     def __init__(self):
@@ -412,13 +411,13 @@ class Juego:
                     parar=True
                     pausa() 
                     
-            #Este fragmento dibuja los enemigos        
+            #Este fragmento dibuja los enemigos y el jugador     
             for enemigo in self.enemigos:
                 for enemigo in enemigo:
                     self.screen.blit(pygame.transform.scale(self.enemigos_sprites[enemigo[0]][self.animacion_On], (35,35)), (enemigo[1].x, enemigo[1].y))
                     self.screen.blit(self.player, (self.playerX, self.playerY))
             
-            #Este fragmento dibuja las balas y la barrear
+            #Este fragmento dibuja las balas y la barrera
             if self.bala:
                 pygame.draw.rect(self.screen, (200, 0, 0), self.bala)
             for bullet in self.balas:
