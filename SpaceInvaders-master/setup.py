@@ -10,7 +10,7 @@ cx_Freeze.setup(
              "include_files":["spaceinvaders.py","assets/a1_0.png","assets/a1_1.png","assets/a2_0.png",
                               "assets/a2_1.png","assets/a3_0.png","assets/a3_1.png","2a1_0.png","2a1_1.png","2a2_0.png","2a2_1.png",
                               "2a3_0.png","2a3_1.png","shooter.png",
-                              "fondonuevo.jpeg","controles.jpeg","618.jpg","star.jpg","laser.wav","video game.wav"]}},
+                              "fondonuevo.jpeg","controles.jpeg","618.jpg","star.jpg"]}},
     executables = executables
 
     )

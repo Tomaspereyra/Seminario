@@ -6,6 +6,7 @@ import random
 
 # Constantes
 parar = False
+
 ancho = 800
 alto = 600
 blanco = 255, 255, 255
@@ -15,14 +16,7 @@ rojo_brillante = 255, 0, 0
 azul = 0, 0, 255 
 pantalla = pygame.display.set_mode((ancho, alto))
 clock = pygame.time.Clock()
-pygame.mixer.pre_init(44100,16,2,4096)
-
-
 pygame.init()
-laser = pygame.mixer.Sound("laser.wav")
-pygame.mixer.music.load("video game.wav")
-pygame.mixer.music.set_volume(0.5)
-pygame.mixer.music.play(-1)
 def quitPausa():
     global parar
     parar=False
@@ -146,6 +140,7 @@ class Juego:
          boton("Salir",100, 500, 120, 50,rojo,rojo_brillante,"Salir")
          
          mouse = pygame.mouse.get_pos()
+         print(mouse)
          pygame.display.update()   
        
     def __init__(self):
@@ -359,7 +354,6 @@ class Juego:
                     self.bala = None
                     self.chance -= 1
                     self.puntaje += 100
-                    pygame.mixer.Sound.play(laser)
                 
         
         if self.bala:
@@ -411,13 +405,13 @@ class Juego:
                     parar=True
                     pausa() 
                     
-            #Este fragmento dibuja los enemigos y el jugador     
+            #Este fragmento dibuja los enemigos        
             for enemigo in self.enemigos:
                 for enemigo in enemigo:
                     self.screen.blit(pygame.transform.scale(self.enemigos_sprites[enemigo[0]][self.animacion_On], (35,35)), (enemigo[1].x, enemigo[1].y))
                     self.screen.blit(self.player, (self.playerX, self.playerY))
             
-            #Este fragmento dibuja las balas y la barrera
+            #Este fragmento dibuja las balas y la barrear
             if self.bala:
                 pygame.draw.rect(self.screen, (200, 0, 0), self.bala)
             for bullet in self.balas:

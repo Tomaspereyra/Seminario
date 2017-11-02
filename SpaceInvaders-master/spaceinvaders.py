@@ -19,8 +19,8 @@ pygame.mixer.pre_init(44100,16,2,4096)
 
 
 pygame.init()
-laser = pygame.mixer.Sound("laser.wav")
-pygame.mixer.music.load("video game.wav")
+laser = pygame.mixer.Sound("assets/laser.wav")
+pygame.mixer.music.load("assets/video game.wav")
 pygame.mixer.music.set_volume(0.5)
 pygame.mixer.music.play(-1)
 def quitPausa():
